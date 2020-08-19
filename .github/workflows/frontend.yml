@@ -1,0 +1,13 @@
+name: Deploy to Heroku (Backend)
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.yml"
+
+  jobs:
+    deploy:
+      run-os: ubuntu-latest
