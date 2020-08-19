@@ -5,9 +5,15 @@ on:
     branches:
       - master
     paths:
-      - "backend/**"
-      - ".github/workflows/backend.yml"
+      - "frontend/**"
+      - ".github/workflows/frontend.yml"
 
-  jobs:
-    deploy:
-      run-os: ubuntu-latest
+jobs:
+  deploy:
+    run-os: ubuntu-latest
+    steps:
+      - uses: actions/chckout@v2
+      - name: Add frontend remote origin
+        run: git remote add heroku-frontend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_FRONTEND_APP_NAME }}.git
+      - name: Deploy frontend to Heroku
+        run: git push heroku-frontend `git subtree split --prefix frontend master`:refs/heads/master --force
