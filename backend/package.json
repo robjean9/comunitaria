@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "\t",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src\"",
     "build": "babel src -s -D -d dist",
