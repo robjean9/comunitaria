@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    run-os: ubuntu-latest
+    runs-os: ubuntu-latest
     steps:
       - uses: actions/chckout@v2
       - name: Add frontend remote origin
