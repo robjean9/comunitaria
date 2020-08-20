@@ -6,6 +6,12 @@
         O Usuário ou Senha Estão incorretos
       </mat-error>
       <mat-form-field class="full-width-input">
+        <input matInput placeholder="Servidor" formControlName="server" type="url" required>
+        <mat-error>
+          Por favor informe um servidor
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
         <input matInput placeholder="E-mail" formControlName="email" required>
         <mat-error>
           Por favor informe um e-mail

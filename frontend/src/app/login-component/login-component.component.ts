@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-login-component',
   templateUrl: './login-component.component.html',
-  styleUrls: ['./login-component.component.sass']
+  styleUrls: ['./login-component.component.scss']
 })
 export class LoginComponentComponent implements OnInit {
 
@@ -19,6 +19,7 @@ export class LoginComponentComponent implements OnInit {
 
   ngOnInit() {
     this.formLogin = this.fb.group({
+      server: ['https://', Validators.pattern('^https?:\/\/(.*)')],
       username: ['', Validators.email],
       passowrd: ['', Validators.required]
     });
@@ -31,8 +32,10 @@ export class LoginComponentComponent implements OnInit {
     this.formSubmitAttempt = false;
     if (this.formLogin.valid) {
       try {
+        const server = this.formLogin.get('server').value;
         const email = this.formLogin.get('email').value;
         const password = this.formLogin.get('password').value;
+
 
       } catch (err) {
         this.loginInvalid = true;
