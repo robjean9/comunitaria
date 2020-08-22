@@ -19,12 +19,15 @@
       </mat-form-field>
 
       <mat-form-field class="full-width-input">
-        <input matInput type="password" placeholder="Senha" formControlName="senha" required>
+        <input matInput type="password" placeholder="Senha" formControlName="password" required>
         <mat-error>
           Por favor informe uma senha
         </mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary">Login</button>
+      <div class="button-row">
+        <button mat-raised-button color="primary">Entrar</button>
+        <button type="button" (click)="goToSignup()" mat-raised-button color="accent">Cadastrar</button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

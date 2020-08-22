@@ -18,11 +18,28 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthService } from './services/auth.service'
+import { StoreService } from './services/store.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+import { SignupComponent } from './signup/signup.component';
+import { UserComponent } from './user/user.component';
+import { TokenInterceptor } from './services/token.interceptor';
+const JWT_Module_Options: JwtModuleOptions = {
+  config: {
+    tokenGetter: () => localStorage.getItem('access_token'),
+  }
+};
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponentComponent
+    LoginComponentComponent,
+    SignupComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +59,20 @@ import { AuthService } from './services/auth.service'
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
-    MatProgressSpinnerModule
+    MatSidenavModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    HttpClientModule,
+
+    JwtModule.forRoot(JWT_Module_Options),
   ],
-  providers: [AuthService],
+  providers: [AuthService, StoreService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -46,6 +46,30 @@ class UserController {
 			res.send(user);
 		}
 	}
+
+	 put(req, res) {
+		try{
+			if(req.body.password != "" && req.body.password != undefined && req.body != null){
+				req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.BCRYPT_SALT))
+			}else{
+				delete req.body.password;
+			}
+			delete req.body.email;
+			delete req.body._id;
+			
+			return User.findOneAndUpdate({_id: req.user._id},{$set:req.body})
+				.then((user) => {
+						return res.status(200).send(user);
+					
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			}catch(err){
+				res.status(400).send();
+				console.log(err);
+			}
+	}
 }
 
 export default UserController;

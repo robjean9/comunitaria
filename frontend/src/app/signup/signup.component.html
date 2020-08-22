@@ -1,0 +1,87 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formSignup" (ngSubmit)="onSubmitSignup()">
+      <h2>Cadastro</h2>
+      <mat-error *ngIf="errorIncomplete">
+        Dados incompletos
+      </mat-error>
+      <mat-error *ngIf="errorDuplicated">
+        E-mail já cadastrado
+      </mat-error>
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Nome" name="name" formControlName="name" required>
+        <mat-error>
+          Por favor informe um Nome
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="E-mail" name="email" formControlName="email" required>
+        <mat-error>
+          Por favor informe um e-mail
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput type="password" placeholder="Senha" name="password" formControlName="password" required>
+        <mat-error>
+          Por favor informe uma senha
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="CEP" formControlName="zipCode" name="zipcode" required>
+        <mat-error>
+          Por favor informe um CEP
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="Cidade" formControlName="city" name="city" required>
+        <mat-error>
+          Por favor informe uma cidade
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="Bairro" formControlName="neighborhood" name="neighborhood" required>
+        <mat-error>
+          Por favor informe um bairro
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="Rua" formControlName="street" name="street" required>
+        <mat-error>
+          Por favor informe uma rua
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="Número" formControlName="number" type="number" name="number" required>
+        <mat-error>
+          Por favor informe o número
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="Complemento" formControlName="complement" name="complement"  required>
+        <mat-error>
+          Por favor informe o complemento
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput  placeholder="Telefone" formControlName="phone" name="phone"  required>
+        <mat-error>
+          Por favor informe o telefone
+        </mat-error>
+      </mat-form-field>
+
+
+      <div class="button-row">
+        <button mat-raised-button color="primary">Cadastrar</button>
+        <button type="button" (click)="goToLogin()" mat-raised-button color="accent">Ir para o Login</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
