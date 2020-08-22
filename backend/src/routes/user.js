@@ -20,7 +20,6 @@ router.post(
 		body('neighborhood').isString().isLength({ min: 1 }),
 		body('street').isString().isLength({ min: 1 }),
 		body('number').isNumeric(),
-		body('complement').isString().isLength({ min: 1 }),
 		body('phone').isString().isLength({ min: 1 }),
 	],
 	(req, res) => {
@@ -48,7 +47,6 @@ router.put(
 		body('neighborhood').isString().isLength({ min: 1 }),
 		body('street').isString().isLength({ min: 1 }),
 		body('number').isNumeric(),
-		body('complement').isString().isLength({ min: 1 }),
 		body('phone').isString().isLength({ min: 1 }),
 	],
 	(req, res) => {
