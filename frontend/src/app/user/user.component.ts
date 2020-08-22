@@ -16,6 +16,8 @@ export class UserComponent implements OnInit {
   userId: string;
 
   updateError: boolean;
+  public latitude = 123123.123;
+  public longitude = 123123.123;
 
   constructor(private fb: FormBuilder, private userService: UserService, private _snackBar: MatSnackBar) { }
 
@@ -26,7 +28,7 @@ export class UserComponent implements OnInit {
         this.formUser = this.fb.group({
           name: [data.name, Validators.required],
           email: [{ value: data.email, disabled: true }],
-          password:[''],
+          password: [''],
           zipCode: [data.zip_code, Validators.required],
           city: [data.city, Validators.required],
           neighborhood: [data.neighborhood, Validators.required],
@@ -36,6 +38,15 @@ export class UserComponent implements OnInit {
           phone: [data.phone, Validators.required],
         });
         this.dataLoaded = true;
+      });
+
+    navigator.geolocation.getCurrentPosition(resp => {
+      console.log(resp);
+      this.latitude = resp.coords.longitude;
+      this.longitude = resp.coords.latitude;
+    },
+      err => {
+        console.log(err);
       });
   }
 
@@ -54,13 +65,13 @@ export class UserComponent implements OnInit {
         number: this.formUser.get('number').value,
         complement: this.formUser.get('complement').value,
         phone: this.formUser.get('phone').value,
-        latitude: 123123.123,
-        longitude: 123123.123
+        latitude: this.latitude,
+        longitude: this.longitude
       }
 
       this.userService.update(data)
         .subscribe(data => {
-          this._snackBar.open('Dados atualizados','OK',{duration:2000,horizontalPosition:'end',verticalPosition:'top'});
+          this._snackBar.open('Dados atualizados', 'OK', { duration: 2000, horizontalPosition: 'end', verticalPosition: 'top' });
         },
           error => {
             this.updateError = true;
