@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
       neighborhood: ['', Validators.required],
       street: ['', Validators.required],
       number: ['', Validators.required],
-      complement: ['', Validators.required],
+      complement: [''],
       phone: ['', Validators.required],
     });
 

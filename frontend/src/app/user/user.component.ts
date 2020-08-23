@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
           neighborhood: [data.neighborhood, Validators.required],
           street: [data.street, Validators.required],
           number: [data.number, Validators.required],
-          complement: [data.complement, Validators.required],
+          complement: [data.complement],
           phone: [data.phone, Validators.required],
         });
         this.dataLoaded = true;
