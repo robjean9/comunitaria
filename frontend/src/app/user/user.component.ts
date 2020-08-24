@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.userService.me()
       .subscribe(data => {
-        data = data.user;
+        data = data;
         this.userId = data._id;
         this.formUser = this.fb.group({
           name: [data.name, Validators.required],

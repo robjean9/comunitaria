@@ -43,7 +43,7 @@ class UserController {
 	async me(req,res){
 		let user = await User.findOne({_id: req.user._id},{password:0,__v:0})
 		if(user){
-			res.send({user});
+			res.send(user);
 		}
 	}
 
