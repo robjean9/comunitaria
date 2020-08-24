@@ -27,6 +27,10 @@ export class UserService {
     return this.http.put<any>(this.store.server + 'user', data);
   }
 
+  fp(data) {
+    return this.http.get<any>(this.store.server + 'forgotPassword?email='+data);
+  }
+
 
 
 

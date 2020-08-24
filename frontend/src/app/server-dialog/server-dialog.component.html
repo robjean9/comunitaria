@@ -1,0 +1,13 @@
+
+<h1 mat-dialog-title>Configuração do Servidor</h1>
+<form [formGroup]="formServer" (ngSubmit)="setServer()">
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Servidor</mat-label>
+    <input matInput placeholder="Servidor" formControlName="server" type="url" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial>Ok</button>
+</div>
+</form>

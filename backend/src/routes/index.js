@@ -18,5 +18,6 @@ router.post('/login', (req,res)=>{
   new UserController().auth(req,res)
 })
 router.get('/me', middleware.middleware, (req,res)=>  new UserController().me(req,res));
+router.get('/forgotPassword', (req,res)=>  new UserController().forgotPassword(req,res));
 
 export default router;

@@ -8,6 +8,7 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,6 +29,8 @@ import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 import { SignupComponent } from './signup/signup.component';
 import { UserComponent } from './user/user.component';
 import { TokenInterceptor } from './services/token.interceptor';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ServerDialogComponent } from './server-dialog/server-dialog.component';
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
     tokenGetter: () => localStorage.getItem('access_token'),
@@ -39,7 +42,9 @@ const JWT_Module_Options: JwtModuleOptions = {
     AppComponent,
     LoginComponentComponent,
     SignupComponent,
-    UserComponent
+    UserComponent,
+    ForgotPasswordComponent,
+    ServerDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     MatProgressSpinnerModule,
     MatSnackBarModule,
     HttpClientModule,
-
+    MatDialogModule,
     JwtModule.forRoot(JWT_Module_Options),
   ],
   providers: [AuthService, StoreService,

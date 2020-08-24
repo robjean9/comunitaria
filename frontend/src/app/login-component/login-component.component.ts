@@ -66,4 +66,10 @@ export class LoginComponentComponent implements OnInit {
       this.router.navigate(['/signup']);
     }
   }
+
+  goToFp(){
+  
+      this.router.navigate(['/fp']);
+    
+  }
 }

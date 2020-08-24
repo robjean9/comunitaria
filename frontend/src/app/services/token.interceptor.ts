@@ -3,6 +3,9 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { StoreService } from './store.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ServerDialogComponent } from '../server-dialog/server-dialog.component';
 
 
 @Injectable({
@@ -10,9 +13,15 @@ import { AuthService } from './auth.service';
 })
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private store: StoreService, public dialog: MatDialog) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (this.store.server == '' || this.store.server == undefined) {
+      this.dialog.open(ServerDialogComponent);
+
+      return;
+    }
 
 
     req = req.clone({ setHeaders: { Authorization: localStorage.getItem('access_token') || '' } });

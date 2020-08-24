@@ -1,6 +1,7 @@
 import User from '../models/user';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 class UserController {
 	async post(req, res) {
 		let user = await User.findOne({ email: req.body.email });
@@ -70,6 +71,51 @@ class UserController {
 				console.log(err);
 			}
 	}
+
+	forgotPassword(req,res) {
+		let password_plain = this.randomPassword(5);
+		let password = bcrypt.hashSync(password_plain, Number(process.env.BCRYPT_SALT))
+		return User.findOneAndUpdate({email: req.query.email}, {$set:{password: password}},{new:true})
+		.then((user)=>{
+			if(user){
+				var transport = nodemailer.createTransport({
+					host: "smtp.mailtrap.io",
+					port: 2525,
+					auth: {
+						user: "0fdb713272bf77",
+						pass: "4ef5ddb4f34e8a"
+					}
+				})
+	
+				transport.sendMail({
+					from:'"CM Solidaria" <5ed6572605-30d32a@inbox.mailtrap.io>',
+					to:user.email,
+					subject:'Esqueceu a Senha',
+					text: `Sua nova senha é: ${password_plain}`
+				}, (err,data)=>{
+					if(err){
+						return console.log(err);
+						
+					}
+					console.log(data);
+					// res.send();
+				})
+			}
+
+			res.send();
+		})
+	}
+
+
+ 	randomPassword(length) {
+		var result           = '';
+		var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for ( var i = 0; i < length; i++ ) {
+			 result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+ }
 }
 
 export default UserController;

@@ -4,10 +4,12 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { SignupComponent } from './signup/signup.component';
 import { UserComponent } from './user/user.component';
 import { AuthGuardService } from './services/auth.guard';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponentComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'fp', component: ForgotPasswordComponent},
   {path: 'me', component: UserComponent, canActivate: [AuthGuardService]},
   {path: '', component: UserComponent, canActivate: [AuthGuardService]}
 ];
