@@ -58,9 +58,8 @@ class UserController {
 			delete req.body.email;
 			delete req.body._id;
 			
-			return User.findOneAndUpdate({_id: req.user._id},{$set:req.body},{new:true})
+			return User.findOneAndUpdate({_id: req.user._id},{$set:req.body},{new:true, projection:{password:0}})
 				.then((user) => {
-						delete user.password;
 						return res.status(200).send(user);
 					
 				})
