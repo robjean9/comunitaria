@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { OcurrenceService } from '../services/ocurrence.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class CreateOcurrenceComponent implements OnInit {
   public longitude = 123123.123;
 
   formOcurrence: FormGroup;
-  constructor(private fb: FormBuilder, private ocurrenceService: OcurrenceService, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private ocurrenceService: OcurrenceService, private _snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -67,6 +68,7 @@ export class CreateOcurrenceComponent implements OnInit {
       this.ocurrenceService.create(data)
         .subscribe(data => {
           this._snackBar.open('Ocorrência criada', 'OK', { duration: 2000, horizontalPosition: 'end', verticalPosition: 'top' });
+          this.router.navigate(['ocurrences'])
         },
           error => {
             this._snackBar.open('Erro ao criar ocorrência', 'OK', { duration: 2000, horizontalPosition: 'end', verticalPosition: 'top' });

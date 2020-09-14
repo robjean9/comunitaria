@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OcurrenceService } from '../services/ocurrence.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class OcurrencesComponent implements OnInit {
 
   ocurrences = [];
 
-  constructor(private ocurrenceService: OcurrenceService) { }
+  constructor(private ocurrenceService: OcurrenceService, private router:Router) { }
 
 
 
@@ -21,6 +22,11 @@ export class OcurrencesComponent implements OnInit {
     }, error=>{
       console.log(error);
     })
+  }
+  
+
+  newOcurrence(){
+    this.router.navigate(['ocurrences/create'])
   }
 
 }
