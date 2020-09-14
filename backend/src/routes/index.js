@@ -1,5 +1,6 @@
 import express from 'express';
 import userRoutes from './user';
+import ocurrenceRoutes from './ocurrence';
 import UserController from '../controllers/userController';
 import middleware from '../middlewares/middleware';
 
@@ -13,6 +14,7 @@ router.get('/', (req,res)=>{
 })
 
 router.use('/user',userRoutes);
+router.use('/ocurrences',ocurrenceRoutes);
 
 router.post('/login', (req,res)=>{
   new UserController().auth(req,res)

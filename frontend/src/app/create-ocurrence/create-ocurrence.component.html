@@ -1,0 +1,107 @@
+<mat-card>
+  <mat-card-content>
+
+    <!-- <mat-spinner *ngIf="!dataLoaded" style="margin: 0 auto;"></mat-spinner> -->
+    <form [formGroup]="formOcurrence" (ngSubmit)="onSubmitOcurrence()">
+      <h2>Nova ocorrência</h2>
+      <mat-error *ngIf="updateError">
+        Erro ao enviar ocorrência
+      </mat-error>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Descrição" name="description" formControlName="description" required>
+        <mat-error>
+          Por favor informe uma Descrição
+        </mat-error>
+      </mat-form-field>
+     
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="CEP" name="zipCode" formControlName="zipCode" required>
+        <mat-error>
+          Por favor informe o CEP
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Cidade" name="city" formControlName="city" required>
+        <mat-error>
+          Por favor informe a Cidade
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Bairro" name="neighborhood" formControlName="neighborhood" required>
+        <mat-error>
+          Por favor informe o Bairro
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Rua" name="street" formControlName="street" required>
+        <mat-error>
+          Por favor informe a Rua
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Número" name="number" formControlName="number" type="number" required>
+        <mat-error>
+          Por favor informe o Número
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Latitude" name="latitude" formControlName="latitude" type="number" required>
+        <mat-error>
+          Por favor informe a Latitude
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Longitude" name="longitude" formControlName="longitude" type="number" required>
+        <mat-error>
+          Por favor informe a Longitude
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Escolha o Tipo</mat-label>
+        <mat-select placeholder="Tipo" formControlName="type" name="type">
+          <mat-option value="assalto">Assalto</mat-option>
+          <mat-option value="agressao">Agressão</mat-option>
+          <mat-option value="covid">COVID</mat-option>
+          <mat-option value="perturbacao">Perturbação</mat-option>
+          <mat-option value="homicidio">Homicídio</mat-option>
+          <mat-option value="atividade_suspeita">Ativiade Suspeita</mat-option>
+          <mat-option value="acidente">Acidente</mat-option>
+          <mat-option value="desaparecimento">Desaparecimento</mat-option>
+          <mat-option value="animal_perdido">Animal Perdido</mat-option>
+        </mat-select>
+        <mat-error>
+          Por favor informe a Longitude
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-checkbox name="anonymous" formControlName="anonymous">Anônimo</mat-checkbox>
+
+ 
+      <mat-form-field>
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Ocorreu em" formControlName="ocurredAt">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false" [stepHour]="1"
+          [stepMinute]="1" [stepSecond]="1" [touchUi]="true">
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+      
+
+
+      <div class="button-row" layout="column">
+        <button mat-raised-button color="primary">Enviar</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

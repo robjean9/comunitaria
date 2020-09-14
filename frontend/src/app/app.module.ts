@@ -31,6 +31,20 @@ import { UserComponent } from './user/user.component';
 import { TokenInterceptor } from './services/token.interceptor';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ServerDialogComponent } from './server-dialog/server-dialog.component';
+import { CreateOcurrenceComponent } from './create-ocurrence/create-ocurrence.component';
+import { OcurrencesComponent } from './ocurrences/ocurrences.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+      
+import {
+  NgxMatDatetimePickerModule, 
+  NgxMatNativeDateModule, 
+  NgxMatTimepickerModule 
+} from '@angular-material-components/datetime-picker';
+import { OcurrenceService } from './services/ocurrence.service';
+
+
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
     tokenGetter: () => localStorage.getItem('access_token'),
@@ -44,7 +58,9 @@ const JWT_Module_Options: JwtModuleOptions = {
     SignupComponent,
     UserComponent,
     ForgotPasswordComponent,
-    ServerDialogComponent
+    ServerDialogComponent,
+    CreateOcurrenceComponent,
+    OcurrencesComponent
   ],
   imports: [
     BrowserModule,
@@ -70,9 +86,14 @@ const JWT_Module_Options: JwtModuleOptions = {
     MatSnackBarModule,
     HttpClientModule,
     MatDialogModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
     JwtModule.forRoot(JWT_Module_Options),
   ],
-  providers: [AuthService, StoreService,
+  providers: [AuthService, StoreService,OcurrenceService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
