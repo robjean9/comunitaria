@@ -4,9 +4,7 @@
     <!-- <mat-spinner *ngIf="!dataLoaded" style="margin: 0 auto;"></mat-spinner> -->
     <form [formGroup]="formOcurrence" (ngSubmit)="onSubmitOcurrence()">
       <h2>Nova ocorrência</h2>
-      <mat-error *ngIf="updateError">
-        Erro ao enviar ocorrência
-      </mat-error>
+
 
       <mat-form-field class="full-width-input">
         <input matInput placeholder="Descrição" name="description" formControlName="description" required>
