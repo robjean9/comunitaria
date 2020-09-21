@@ -31,6 +31,7 @@ export class AuthService {
           if (data && data.token) {
             localStorage.setItem('access_token', data.token);
             this.isAuthenticated.next(true);
+            this.loadRole();
             return true;
           }
           return false;
@@ -52,9 +53,19 @@ export class AuthService {
       console.log(tokenPayload);
       console.log(token);
       this.isAuthenticated.next(true);
+      this.loadRole();
       return !this.jwtHelper.isTokenExpired(token);
     }
     return false;
+  }
+
+  async loadRole(){
+    let token = localStorage.getItem('access_token');
+    if(token != null){
+      let tokenPayload =  this.jwtHelper.decodeToken(token);
+      let role = tokenPayload.role;
+      this.role = role;
+    }
   }
 
 

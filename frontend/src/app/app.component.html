@@ -1,3 +1,5 @@
+<div class="mode-admin" *ngIf="authService.role=='admin'">User Admin</div>
+
 <mat-sidenav-container class="example-container">
   <mat-sidenav #drawer mode="side" [(opened)]="opened"  >
     <mat-toolbar>Projeto</mat-toolbar>

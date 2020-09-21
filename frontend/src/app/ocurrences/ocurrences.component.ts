@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { OcurrenceService } from '../services/ocurrence.service';
 
 @Component({
@@ -15,14 +16,13 @@ export class OcurrencesComponent implements OnInit {
 
   public isMy = false;
   @ViewChild(MapInfoWindow, {static:false}) infoWindow: MapInfoWindow;
-  constructor(private ocurrenceService: OcurrenceService, private router:Router, private route: ActivatedRoute,  private _snackBar: MatSnackBar) { }
+  constructor(private ocurrenceService: OcurrenceService, private router:Router, private route: ActivatedRoute,  private _snackBar: MatSnackBar, private auth: AuthService) { }
 
 
 
   ngOnInit(): void {
 
    this.loadOcurrences();
-
 
   }
 
