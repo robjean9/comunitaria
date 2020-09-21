@@ -98,7 +98,7 @@ class OcurrenceController{
         if(data.user_id.equals(req.user._id) || req.user.role == 'admin'){
           return await Ocurrence.deleteOne({_id:req.params.id})
           .then(async data=>{
-            res.send(data);
+            res.send({status:"Excluído com sucesso"});
           })
           .catch(err=> res.status(400).send({error: 'Não foi possível excluír a ocorrência',err:err}))
         }else{
