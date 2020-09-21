@@ -13,6 +13,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   public isAuthenticated = new BehaviorSubject<boolean>(false);
 
+  public role;
+
   constructor(private router: Router, private http: HttpClient, private store: StoreService, private jwtHelper: JwtHelperService) {
 
   }

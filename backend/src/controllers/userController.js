@@ -30,7 +30,8 @@ class UserController {
 			if (password) {
 				let token = jwt.sign({
 					_id:user._id,
-					name:user.name
+					name:user.name,
+					role:user.role
 				},process.env.JWT_SECRET,{algorithm:"HS256"}); 
 				res.send({token});
 			} else {

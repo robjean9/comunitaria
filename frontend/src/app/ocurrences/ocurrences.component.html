@@ -1,18 +1,51 @@
+<button mat-fab color="primary" (click)="newOcurrence()">
+  <mat-icon>add</mat-icon>
+</button>
 
-<button mat-fab color="primary" (click)="newOcurrence()"><mat-icon>add</mat-icon></button>
+<h1 *ngIf="isMy">Minhas Ocorrências</h1>
+<h1 *ngIf="!isMy">Ocorrências</h1>
 
 
-<mat-card *ngFor="let ocurrence of ocurrences">
-  <mat-card-header>
-    <mat-card-title>{{ocurrence.description}}</mat-card-title>
-    <mat-card-subtitle>{{ocurrence.type}} - {{ocurrence.anonymous ? 'Anônimo' : ocurrence.user_name}}</mat-card-subtitle>
-  </mat-card-header>
 
-  <mat-card-content>
-    <p>{{ocurrence.street}},{{ocurrence.number}} {{ocurrence.complement ? '('+ocurrence.complement+')' : ''}}  - {{ocurrence.neighborhood}} - {{ocurrence.city}} | {{ocurrence.zip_code}} </p>
+<div *ngIf="ocurrences.length > 0">
+  <mat-card *ngFor="let ocurrence of ocurrences">
+    <mat-card-header>
+      <mat-card-title>{{ocurrence.description}}</mat-card-title>
+      <mat-card-subtitle>{{ocurrence.type}} - {{ocurrence.anonymous ? 'Anônimo' : ocurrence.user_name}}</mat-card-subtitle>
+    </mat-card-header>
 
-    <p>Ocorreu em: {{ocurrence.ocurred_at | date:'dd/MM/yyyy hh:mm'}}</p>
-    <p>Publicado em: {{ocurrence.created_at | date:'dd/MM/yyyy hh:mm'}}</p>
+    <mat-card-content>
+      <p>{{ocurrence.street}},{{ocurrence.number}} {{ocurrence.complement ? '('+ocurrence.complement+')' : ''}} - {{ocurrence.neighborhood}} - {{ocurrence.city}} | {{ocurrence.zip_code}} </p>
+
+      <p>Ocorreu em: {{ocurrence.ocurred_at | date:'dd/MM/yyyy hh:mm'}}</p>
+      <!-- <p>Publicado em: {{ocurrence.created_at | date:'dd/MM/yyyy hh:mm'}}</p> -->
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="isMy">
+      <button mat-button (click)="editOcurrence(ocurrence._id)">EDITAR</button>
+      <button mat-button (click)="deleteOcurrence(ocurrence._id)">EXCLUIR</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+  <mat-card class="map">
+    <mat-card-header>
+      <mat-card-title>Mapa de ocorrências</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+    <google-map width="600" height="400"  [center]="{lat: ocurrences[0].latitude, lng: ocurrences[0].longitude}" [zoom]="13">
+      <map-marker #marker="mapMarker" *ngFor="let ocurrence of ocurrences"
+      [position]="{lat: ocurrence.latitude, lng: ocurrence.longitude}" 
+      [options]="{draggable:false, title:ocurrence.type}" [title]="ocurrence.type" ></map-marker>
+      <!-- <map-info-window>{{}}</map-info-window> -->
+    </google-map>
   </mat-card-content>
+  </mat-card>
 
-</mat-card>
+
+</div>
+
+
+
+
+<p class="text-center" *ngIf="ocurrences.length == 0">Nenhuma ocorrência para mostrar!</p>

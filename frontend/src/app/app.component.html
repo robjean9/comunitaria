@@ -2,6 +2,8 @@
   <mat-sidenav #drawer mode="side" [(opened)]="opened"  >
     <mat-toolbar>Projeto</mat-toolbar>
         <mat-nav-list>
+            <a mat-list-item [routerLink]="['ocurrences']">Ocorrências</a>
+            <a mat-list-item [routerLink]="['ocurrences/me']">Minhas Ocorrências</a>
             <a mat-list-item [routerLink]="['me']">Meus Dados</a>
             <a mat-list-item (click)="logout()">Sair</a>
         </mat-nav-list>

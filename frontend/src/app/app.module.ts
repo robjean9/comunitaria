@@ -35,8 +35,7 @@ import { CreateOcurrenceComponent } from './create-ocurrence/create-ocurrence.co
 import { OcurrencesComponent } from './ocurrences/ocurrences.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
-      
+import { GoogleMapsModule } from '@angular/google-maps';
 import {
   NgxMatDatetimePickerModule, 
   NgxMatNativeDateModule, 
@@ -91,6 +90,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    GoogleMapsModule,
     JwtModule.forRoot(JWT_Module_Options),
   ],
   providers: [AuthService, StoreService,OcurrenceService,

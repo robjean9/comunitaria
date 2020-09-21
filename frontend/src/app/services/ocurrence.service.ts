@@ -23,6 +23,21 @@ export class OcurrenceService {
     return this.http.get<any>(this.store.server + 'ocurrences');
   }
 
+  getMyOcurrences(){
+    return this.http.get<any>(this.store.server + 'ocurrences/me');
+  }
+
+  getById(id:string){
+    return this.http.get<any>(this.store.server + 'ocurrences/' + id);
+  }
+
+  update(data) {
+    return this.http.put(this.store.server + 'ocurrences/' + data._id, data);
+  }
+
+  delete(id) {
+    return this.http.delete(this.store.server + 'ocurrences/' + id);
+  }
 
 
 

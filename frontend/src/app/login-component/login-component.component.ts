@@ -43,7 +43,7 @@ export class LoginComponentComponent implements OnInit {
           
           if(data){
             console.log('me');
-            this.router.navigate(['me']);
+            this.router.navigate(['ocurrences']);
           }else{
 
           }

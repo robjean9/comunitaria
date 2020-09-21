@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OcurrenceService } from '../services/ocurrence.service';
 
 @Component({
@@ -11,17 +13,37 @@ export class OcurrencesComponent implements OnInit {
 
   ocurrences = [];
 
-  constructor(private ocurrenceService: OcurrenceService, private router:Router) { }
+  public isMy = false;
+  @ViewChild(MapInfoWindow, {static:false}) infoWindow: MapInfoWindow;
+  constructor(private ocurrenceService: OcurrenceService, private router:Router, private route: ActivatedRoute,  private _snackBar: MatSnackBar) { }
 
 
 
   ngOnInit(): void {
-    this.ocurrenceService.get()
-    .subscribe(data=>{
-      this.ocurrences = data;
-    }, error=>{
-      console.log(error);
-    })
+
+   this.loadOcurrences();
+
+
+  }
+
+  loadOcurrences(){
+
+    if(this.route.routeConfig.path === 'ocurrences/me'){
+      this.isMy = true;
+      this.ocurrenceService.getMyOcurrences()
+      .subscribe(data=>{
+        this.ocurrences = data;
+      }, error=>{
+        console.log(error);
+      })
+    }else{
+      this.ocurrenceService.get()
+      .subscribe(data=>{
+        this.ocurrences = data;
+      }, error=>{
+        console.log(error);
+      })
+    }
   }
   
 
@@ -29,4 +51,20 @@ export class OcurrencesComponent implements OnInit {
     this.router.navigate(['ocurrences/create'])
   }
 
+
+  deleteOcurrence(id){
+    this.ocurrenceService.delete(id)
+    .subscribe(data=>{
+      this._snackBar.open('Ocorrência excluída', 'OK', { duration: 2000, horizontalPosition: 'end', verticalPosition: 'top' });
+      this.loadOcurrences();
+    })
+  }
+
+  editOcurrence(id){
+    this.router.navigate([`ocurrences/${id}`])
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
+  }
 }

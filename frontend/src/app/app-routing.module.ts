@@ -15,7 +15,9 @@ const routes: Routes = [
   {path: 'me', component: UserComponent, canActivate: [AuthGuardService]},
   {path: '', component: OcurrencesComponent, canActivate: [AuthGuardService]},
   {path: 'ocurrences', component: OcurrencesComponent, canActivate: [AuthGuardService]},
-  {path: 'ocurrences/create', component: CreateOcurrenceComponent, canActivate: [AuthGuardService]}
+  {path: 'ocurrences/create', component: CreateOcurrenceComponent, canActivate: [AuthGuardService]},
+  {path: 'ocurrences/me', component: OcurrencesComponent, canActivate: [AuthGuardService]},
+  {path: 'ocurrences/:id', component: CreateOcurrenceComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

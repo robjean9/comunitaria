@@ -23,7 +23,9 @@ export class TokenInterceptor implements HttpInterceptor {
       return;
     }
 
-
+    if(req.url.includes('maps.googleapis.com')){
+      return next.handle(req);
+    }
     req = req.clone({ setHeaders: { Authorization: localStorage.getItem('access_token') || '' } });
 
     return next.handle(req)

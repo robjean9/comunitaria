@@ -10,7 +10,7 @@ exports.middleware = (req,res,next) => {
        return res.status(401).send();
       }
 
-      let user = await User.findById(data._id);
+      let user = await User.findOne({_id:data._id},{},{lean:true});
       if(user){
         req.user = user;
         next();

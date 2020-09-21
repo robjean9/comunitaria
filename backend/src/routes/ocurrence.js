@@ -51,5 +51,34 @@ router.get('/',
       ocurrenceController.get(req,res)
     }
 )
+router.get('/me',
+    middleware.middleware,
+    (req,res)=>{
+      ocurrenceController.getMyOcurrences(req,res)
+    }
+)
+
+
+router.get('/:id',
+    middleware.middleware,
+    (req,res)=>{
+      ocurrenceController.getById(req,res)
+    }
+)
+
+
+router.delete('/:id',
+    middleware.middleware,
+    (req,res)=>{
+      ocurrenceController.delete(req,res)
+    }
+)
+
+router.put('/:id',
+    middleware.middleware,
+    (req,res)=>{
+      ocurrenceController.update(req,res)
+    }
+)
 
 export default router;
