@@ -71,12 +71,14 @@ class OcurrenceController{
     return await Ocurrence.findOne({_id:req.params.id})
     .then(async data=>{
       if(data){
-        if(data.user_id == req.user._id || req.user.role == 'admin'){
+        if(data.user_id.equals(req.user._id) || req.user.role == 'admin'){
           return await Ocurrence.findOneAndUpdate({_id:req.params.id}, {$set:req.body},{new:true})
           .then(async data=>{
             res.send(data);
           })
           .catch(err=> res.status(400).send({error:'Não foi possível atualizar a ocorrência',err:err}));
+        }else{
+          res.status(403).send({error:'Você não pode editar essa ocorrência!'});
         }
       }else{
         res.status(404).send({error:'Ocorrência não encontrada!'})

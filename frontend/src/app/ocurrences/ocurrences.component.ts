@@ -16,7 +16,7 @@ export class OcurrencesComponent implements OnInit {
 
   public isMy = false;
   @ViewChild(MapInfoWindow, {static:false}) infoWindow: MapInfoWindow;
-  constructor(private ocurrenceService: OcurrenceService, private router:Router, private route: ActivatedRoute,  private _snackBar: MatSnackBar, private auth: AuthService) { }
+  constructor(private ocurrenceService: OcurrenceService, private router:Router, private route: ActivatedRoute,  private _snackBar: MatSnackBar, public auth: AuthService) { }
 
 
 

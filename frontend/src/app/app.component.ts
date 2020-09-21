@@ -12,7 +12,7 @@ export class AppComponent {
   // @ViewChild('drawer',{static:false}) sidenav;
   opened = false
 
-  constructor(private authService: AuthService){ 
+  constructor(public authService: AuthService){ 
 
     this.authService.isAuthenticated.subscribe(data=>{
       console.log(data);
