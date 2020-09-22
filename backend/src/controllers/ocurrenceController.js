@@ -29,6 +29,7 @@ class OcurrenceController{
           item.user_name = item.user_id.name;
           item.user_id = item.user_id._id;
         }
+        item.ocurred_at = item.ocurred_at.getTime();
         return item;
       })
       res.send(data);
@@ -42,6 +43,10 @@ class OcurrenceController{
     .sort({created_at:-1})
     // .populate('user_id', {name:1, _id:1},'User')
     .then(async data=>{
+      data = await data.map(item =>{
+        item.ocurred_at = item.ocurred_at.getTime();
+        return item;
+      })
       res.send(data);
     })
     .catch(err=> res.status(400).send(err))
@@ -58,6 +63,7 @@ class OcurrenceController{
           data.user_name = data.user_id.name;
           data.user_id = data.user_id._id;
         }
+        data.ocurred_at = data.ocurred_at.getTime();
 
         res.send(data);
       }else{

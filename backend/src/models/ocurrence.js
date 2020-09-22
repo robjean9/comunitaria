@@ -27,7 +27,6 @@ const schema = new mongoose.Schema({
     default:'assalto'
   },
   ocurred_at: Date,
-  created_at: {type: Date, default: Date.now},
   user_id: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   anonymous: Boolean,
 
