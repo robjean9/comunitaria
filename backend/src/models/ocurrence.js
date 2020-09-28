@@ -34,7 +34,8 @@ const schema = new mongoose.Schema({
   longitude: Number,
 
   
-});
+},
+{timestamps:false});
 
 const Ocurrence = mongoose.model('Ocurrence', schema, 'ocurrence');
 

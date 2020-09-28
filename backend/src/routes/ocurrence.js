@@ -25,7 +25,7 @@ router.post(
     body('ocurred_at').isNumeric(),
     body('neighborhood').isString().isLength({min: 1}),
     body('street').isString().isLength({min: 1}),
-    body('number').isNumeric(),
+    body('number').optional().isNumeric(),
     body('latitude').isNumeric(),
     body('longitude').isNumeric(),
     body('anonymous').isBoolean()
