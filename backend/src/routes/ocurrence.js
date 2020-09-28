@@ -37,7 +37,7 @@ router.post(
       let errors  = [];
       await validationResult(req).array({onlyFirstError:true}).map((item=>  errors.push(item.param)));
       errors = errors.join(', ');
-      return res.status(400).send({error:`Campos obrigatórios não preenchidos: ${errors}` });
+      return res.status(400).send({error:`Campos obrigatórios não preenchidos ou com erros: ${errors}` });
     }else{
     
       ocurrenceController.post(req,res);
@@ -97,14 +97,14 @@ router.put('/:id',
       body('longitude').isNumeric(),
       body('anonymous').isBoolean()
     ],
-    (req,res)=>{
+    async (req,res)=>{
       if(!validationResult(req).isEmpty()){
         console.log(+ validationResult(req).mapped());  
         console.log(validationResult(req));  
         let errors  = [];
         await validationResult(req).array({onlyFirstError:true}).map((item=>  errors.push(item.param)));
         errors = errors.join(', ');
-        return res.status(400).send({error:`Campos obrigatórios não preenchidos: ${errors}` });
+        return res.status(400).send({error:`Campos obrigatórios não preenchidos ou com erros: ${errors}` });
       }else{
         ocurrenceController.update(req,res)
       }
