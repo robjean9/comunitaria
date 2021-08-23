@@ -17,9 +17,11 @@ class OcurrenceController{
   }
 
   async get(req,res) {
-    return await Ocurrence.find({},{__v:0},{lean:true})
-    .sort({created_at:-1})
+    return await Ocurrence.find({hidden:false},{__v:0},{lean:true})
+    .sort({created_at:-1, 'comments.created_at':-1})
     .populate('user_id', {name:1, _id:1},'User')
+    .populate('comments._user', {name:1, _id:1},'User')
+    
     .then(async data=>{
 
       data = await data.map(item=>{
@@ -30,11 +32,15 @@ class OcurrenceController{
           item.user_id = item.user_id._id;
         }
         item.ocurred_at = item.ocurred_at.getTime();
+       item.positiveVotes = item.votes?.filter((vote)=> vote.vote == true)?.length;
+       item.negativeVotes = item.votes?.filter((vote)=> vote.vote == false)?.length;
+       item.iVoted = item.votes?.find((vote)=>  vote._user.toString() == req.user._id.toString());
+       
         return item;
       })
       res.send(data);
     })
-    .catch(err=> res.status(400).send(err))
+    .catch(err=> {res.status(400).send(err); console.log(err)})
   }
 
 
@@ -118,6 +124,59 @@ class OcurrenceController{
 
 
 
+  }
+
+  async vote(req,res) {
+    let ocurrence =  await Ocurrence.findOne({_id: req.params.id});
+    if(ocurrence){
+      if(ocurrence._user != req.user._id){
+        let userAlreadyVoted = await Ocurrence.findOne({_id: ocurrence._id, 'votes._user':req.user._id});
+        console.log(userAlreadyVoted);
+        if(userAlreadyVoted){
+          await Ocurrence.updateOne({_id: ocurrence._id, 'votes._user':req.user._id}, {$set: {votes:{_user: req.user._id, vote: req.body.vote}}});
+        }else{
+          await Ocurrence.updateOne({_id: ocurrence._id}, {$push: {votes:{_user: req.user._id, vote: req.body.vote}}});
+        }
+        let ocurrenceUpdated = await Ocurrence.findOne({_id:ocurrence._id});
+        let positiveVotes = ocurrenceUpdated.votes.filter((vote)=> vote.vote == true).length;
+        let negativeVotes = ocurrenceUpdated.votes.filter((vote)=> vote.vote == false).length;
+        let totalVotes = positiveVotes+negativeVotes;
+
+        if(totalVotes > 20){
+          if(negativeVotes/totalVotes >= 0.7){
+            await Ocurrence.updateOne({_id:ocurrence._id},{$set:{hidden:true}});
+          }
+        }
+
+        res.send({positiveVotes, negativeVotes});
+      }else{
+        res.status(400).send({error:'Você não pode votar na própria ocorrência'});
+      }
+    }else{
+      res.status(404).send({error:'Não foi possível votar na ocorrência.',})
+    }
+  }
+
+  async comment(req,res) {
+    let ocurrence = await Ocurrence.findOne({_id: req.params.id});
+    if(ocurrence) {
+      await Ocurrence.updateOne({_id: ocurrence._id}, {$push:{comments:{text: req.body.text, _user: req.user._id}}});
+      res.status(200).send({});
+    }else{
+      res.status(400).send({error:'Não foi possível adicionar o comentário'});
+    }
+  }
+
+  async deleteComment(req,res) {
+    let ocurrence = await Ocurrence.findOne({_id: req.params.id});
+    if(ocurrence) {
+
+
+      await Ocurrence.updateOne({_id: ocurrence._id, comments:{$elemMatch:{_id: req.params.comment_id, _user: req.user._id}}}, {$pull:{comments:{_id: req.params.comment_id}}});
+      res.status(200).send({});
+    }else{
+      res.status(400).send({error:'Não foi possível adicionar o comentário'});
+    }
   }
 
 }

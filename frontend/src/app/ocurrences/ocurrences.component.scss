@@ -27,3 +27,32 @@ h1{
   min-height: 400px;
   height: 448px;
 }
+
+mat-icon.active{
+  color: #7b1fa2;
+}
+
+.card-footer{
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+.comment{
+  margin-top: 8px;
+  margin-bottom: 8px;
+  .comment-header{
+    display: block;
+    .comment-title{
+      display: inline-block;
+    }
+    .comment-date{
+      display: inline-block;
+      float: right;
+      font-size: 12px;
+    }
+  }
+  .comment-subtitle{
+    margin-left: 8px;
+  }
+  
+}

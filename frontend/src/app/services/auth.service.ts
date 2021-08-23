@@ -68,6 +68,15 @@ export class AuthService {
     }
   }
 
+  async getId(){
+    let token = localStorage.getItem('access_token');
+    if(token != null){
+      let tokenPayload =  this.jwtHelper.decodeToken(token);
+      let id = tokenPayload._id;
+      return id
+    }
+  }
+
 
 
 

@@ -111,4 +111,8 @@ router.put('/:id',
     }
 )
 
+router.patch('/:id/vote', middleware.middleware, (req,res)=> ocurrenceController.vote(req,res));
+router.patch('/:id/comment', middleware.middleware, (req,res)=> ocurrenceController.comment(req,res));
+router.delete('/:id/comment/:comment_id', middleware.middleware, (req,res)=> ocurrenceController.deleteComment(req,res));
+
 export default router;

@@ -8,7 +8,7 @@
 
 
 <div *ngIf="ocurrences.length > 0">
-  <mat-card *ngFor="let ocurrence of ocurrences">
+  <mat-card *ngFor="let ocurrence of ocurrences; let i =index">
     <mat-card-header>
       <mat-card-title>{{ocurrence.description}}</mat-card-title>
       <mat-card-subtitle>{{ocurrence.type}} - {{ocurrence.anonymous ? 'Anônimo' : ocurrence.user_name}}</mat-card-subtitle>
@@ -17,7 +17,13 @@
     <mat-card-content>
       <p>{{ocurrence.street}},{{ocurrence.number}} {{ocurrence.complement ? '('+ocurrence.complement+')' : ''}} - {{ocurrence.neighborhood}} - {{ocurrence.city}} | {{ocurrence.zip_code}} </p>
 
-      <p>Ocorreu em: {{ocurrence.ocurred_at | date:'dd/MM/yyyy hh:mm'}}</p>
+      <p>Ocorreu em: {{ocurrence.ocurred_at | date:'dd/MM/yyyy HH:mm'}}</p>
+      <google-map width="400" height="400"  [center]="{lat: ocurrence.latitude, lng: ocurrence.longitude}" [zoom]="13">
+        <map-marker #marker="mapMarker"
+        [position]="{lat: ocurrence.latitude, lng: ocurrence.longitude}" 
+        [options]="{draggable:false, title:ocurrence.type}" [title]="ocurrence.type" ></map-marker>
+        <!-- <map-info-window>{{}}</map-info-window> -->
+      </google-map>
       <!-- <p>Publicado em: {{ocurrence.created_at | date:'dd/MM/yyyy hh:mm'}}</p> -->
     </mat-card-content>
 
@@ -26,6 +32,29 @@
       <button mat-button (click)="deleteOcurrence(ocurrence._id)">EXCLUIR</button>
     </mat-card-actions>
 
+    <mat-card-footer class="card-footer">
+      <div>
+       <button mat-button (click)="vote(ocurrence._id,true)"><mat-icon [ngClass]="{'active':ocurrence.iVoted?.vote}">thumb_up</mat-icon> &nbsp;{{ocurrence.positiveVotes}}</button>
+        <button mat-button (click)="vote(ocurrence._id,false)"><mat-icon [ngClass]="{'active':ocurrence.iVoted?.vote == false}">thumb_down</mat-icon> &nbsp;{{ocurrence.negativeVotes}}</button>
+      </div>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Comentário" name="comment" (keyUp.enter)="comment($event.target.value, ocurrence._id, i)" required>
+        <mat-error>
+          
+        </mat-error>
+      </mat-form-field>
+
+      <div *ngFor="let comment of ocurrence.comments" class="comment">
+        <div class="comment-header">
+          <div class="comment-title">{{comment._user.name}}</div>
+          <div class="comment-date">{{comment.created_at | date:'dd/MM/yyyy HH:mm'}}</div>
+        </div>
+        
+        <div class="comment-subtitle">{{comment.text}}</div>
+      </div>
+    </mat-card-footer>
+
   </mat-card>
 
   <mat-card class="map">
@@ -33,7 +62,7 @@
       <mat-card-title>Mapa de ocorrências</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-    <google-map width="600" height="400"  [center]="{lat: ocurrences[0].latitude, lng: ocurrences[0].longitude}" [zoom]="13">
+    <google-map width="600" height="400"  [center]="{lat: -25.0945, lng: -50.1633}" [zoom]="13" [disableDefaultUI]="true" [fullScreenControl]="true">
       <map-marker #marker="mapMarker" *ngFor="let ocurrence of ocurrences"
       [position]="{lat: ocurrence.latitude, lng: ocurrence.longitude}" 
       [options]="{draggable:false, title:ocurrence.type}" [title]="ocurrence.type" ></map-marker>

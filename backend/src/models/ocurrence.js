@@ -33,6 +33,19 @@ const schema = new mongoose.Schema({
   latitude: Number,
   longitude: Number,
 
+  comments:[{
+    text: String,
+    _user: {type:mongoose.Schema.Types.ObjectId, ref: 'User'},
+    created_at: {type: Date, default: Date.now}
+  }],
+
+  votes:[{
+    _user:{type:mongoose.Schema.Types.ObjectId, ref: 'User'},
+    vote: Boolean
+  }],
+
+  hidden:{type:Boolean, default:false}
+
   
 },
 {timestamps:false});

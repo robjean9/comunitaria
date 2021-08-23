@@ -39,6 +39,17 @@ export class OcurrenceService {
     return this.http.delete(this.store.server + 'ocurrences/' + id);
   }
 
+  vote(id, vote) {
+    return this.http.patch(this.store.server + `ocurrences/${id}/vote`,{vote});
+  }
+
+  comment(id, text) {
+    return this.http.patch(this.store.server + `ocurrences/${id}/comment`,{text});
+  }
+  deleteComment(id, comment_id) {
+    return this.http.delete(this.store.server + `ocurrences/${id}/comment/${comment_id}`,);
+  }
+
 
 
 
