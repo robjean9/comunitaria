@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class StoreService{
   public server: string = 'https://backend-solidaria.herokuapp.com/';
+  // public server: string = 'http://localhost:3000/';
 
   constructor(private router: Router, private http: HttpClient){
     if(localStorage.getItem('server_uri')){

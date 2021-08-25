@@ -18,7 +18,7 @@ class OcurrenceController{
 
   async get(req,res) {
     return await Ocurrence.find({hidden:false},{__v:0},{lean:true})
-    .sort({created_at:-1, 'comments.created_at':-1})
+    .sort({ocurred_at:-1, 'comments.created_at':-1})
     .populate('user_id', {name:1, _id:1},'User')
     .populate('comments._user', {name:1, _id:1},'User')
     
@@ -133,7 +133,7 @@ class OcurrenceController{
         let userAlreadyVoted = await Ocurrence.findOne({_id: ocurrence._id, 'votes._user':req.user._id});
         console.log(userAlreadyVoted);
         if(userAlreadyVoted){
-          await Ocurrence.updateOne({_id: ocurrence._id, 'votes._user':req.user._id}, {$set: {votes:{_user: req.user._id, vote: req.body.vote}}});
+          await Ocurrence.updateOne({_id: ocurrence._id, 'votes._user': req.user._id}, {$set: {'votes.$.vote': req.body.vote}});
         }else{
           await Ocurrence.updateOne({_id: ocurrence._id}, {$push: {votes:{_user: req.user._id, vote: req.body.vote}}});
         }
@@ -142,7 +142,7 @@ class OcurrenceController{
         let negativeVotes = ocurrenceUpdated.votes.filter((vote)=> vote.vote == false).length;
         let totalVotes = positiveVotes+negativeVotes;
 
-        if(totalVotes > 20){
+        if(totalVotes >= 20){
           if(negativeVotes/totalVotes >= 0.7){
             await Ocurrence.updateOne({_id:ocurrence._id},{$set:{hidden:true}});
           }

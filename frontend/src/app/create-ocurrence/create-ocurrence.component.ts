@@ -32,14 +32,14 @@ export class CreateOcurrenceComponent implements OnInit {
           .subscribe(data => {
             this.formOcurrence = this.fb.group({
               description: [data.description, Validators.required],
-              zipCode: [data.zip_code, Validators.required],
+              // zipCode: [data.zip_code, Validators.required],
               city: [data.city, Validators.required],
               neighborhood: [data.neighborhood, Validators.required],
               street: [data.street, Validators.required],
               number: [data.number, Validators.required],
               complement: [data.complement],
-              latitude: [data.latitude, Validators.required],
-              longitude: [data.longitude, Validators.required],
+              // latitude: [data.latitude, Validators.required],
+              // longitude: [data.longitude, Validators.required],
               type: [data.type, Validators.required],
               anonymous: [data.anonymous, Validators.required],
               ocurredAt: [new Date(data.ocurred_at), Validators.required],
@@ -49,14 +49,14 @@ export class CreateOcurrenceComponent implements OnInit {
       } else {
         this.formOcurrence = this.fb.group({
           description: ['', Validators.required],
-          zipCode: ['', Validators.required],
+          // zipCode: ['', Validators.required],
           city: ['', Validators.required],
           neighborhood: ['', Validators.required],
           street: ['', Validators.required],
           number: ['', Validators.required],
           complement: [''],
-          latitude: ['', Validators.required],
-          longitude: ['', Validators.required],
+          // latitude: ['', Validators.required],
+          // longitude: ['', Validators.required],
           type: ['assalto', Validators.required],
           anonymous: [false, Validators.required],
           ocurredAt: [false, Validators.required],
@@ -80,9 +80,10 @@ export class CreateOcurrenceComponent implements OnInit {
   async onSubmitOcurrence() {
     if (this.formOcurrence.valid) {
 
+      
       let data = {
         description: this.formOcurrence.get('description').value,
-        zip_code: this.formOcurrence.get('zipCode').value,
+        zip_code: '84025000',
         city: this.formOcurrence.get('city').value,
         neighborhood: this.formOcurrence.get('neighborhood').value,
         street: this.formOcurrence.get('street').value,
@@ -91,9 +92,10 @@ export class CreateOcurrenceComponent implements OnInit {
         type: this.formOcurrence.get('type').value,
         anonymous: this.formOcurrence.get('anonymous').value,
         ocurred_at: this.formOcurrence.get('ocurredAt').value.getTime(),
-        latitude: this.latitude,
-        longitude: this.longitude
+        latitude: -25,
+        longitude: -50
       }
+
 
       let address = encodeURIComponent(`${data.street} ${data.number} ${data.city}`);
 
